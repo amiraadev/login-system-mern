@@ -29,3 +29,8 @@ Follow the steps below to get the MERN login system up and running:
 2.Install the dependencies:
 cd mern-login-system
 npm install
+
+3.Configure environment variables:
+Configure environment variables:
+      MONGODB_URI=<your-mongodb-uri>
+      JWT_SECRET=<your-jwt-secret>
