@@ -42,4 +42,11 @@ The server should now be running at http://localhost:3000.
 
 Open your browser and visit http://localhost:3000 to access the login system.
 
+## Folder structure
+
+The project structure is organized as follows:
+
+client: Contains the React frontend application
+server: Contains the Express backend server
+
 
