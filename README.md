@@ -25,3 +25,7 @@ Follow the steps below to get the MERN login system up and running:
 
    ```shell
    git clone https://github.com/your-username/mern-login-system.git
+   
+2.Install the dependencies:
+cd mern-login-system
+npm install
