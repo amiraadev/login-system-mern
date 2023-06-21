@@ -34,3 +34,7 @@ npm install
 Configure environment variables:
       MONGODB_URI=<your-mongodb-uri>
       JWT_SECRET=<your-jwt-secret>
+
+4.Start the development server:
+   npm start
+
