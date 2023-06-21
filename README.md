@@ -38,3 +38,8 @@ Configure environment variables:
 4.Start the development server:
    npm start
 
+The server should now be running at http://localhost:3000.
+
+Open your browser and visit http://localhost:3000 to access the login system.
+
+
