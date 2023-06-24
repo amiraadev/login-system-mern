@@ -4,6 +4,7 @@ import {BrowserRouter as Router , Routes , Route} from "react-router-dom"
 import Register from "./components/Register";
 import Home from "./components/Home";
 import About from "./components/About";
+import ForgotPassword from "./components/ForgotPassword";
 
 function App() {
    
@@ -14,6 +15,7 @@ function App() {
             {/* <Route path='/login' element={<Login/>} /> */}
             <Route path='/login' element={<Login/>} />
             <Route path='/register' element={<Register/>} />
+            <Route path='/forget-password' element={<ForgotPassword/>} />
 
             <Route element={<ProtectedRoutes/>}>
                 <Route path='/' element={<Home/>} />

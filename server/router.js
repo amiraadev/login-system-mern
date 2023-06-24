@@ -7,11 +7,13 @@ const userModel = require('./models/userModel');
 //controllers
 const  validateRegister  = require('./controllers/registerValidation');
 const loginValidation = require('./controllers/loginValidation');
+const forgotPassword = require('./controllers/forgotPassword');
 
 
 const protect = require('./middleware/authMiddleware');
 const { getMe } = require('./token-config');
-
+const resetPassword = require('./controllers/resetPassword');
+import  {localVariables} from ('./controllers/resetPassword');
 
 const router = express.Router()
 
@@ -20,11 +22,9 @@ const router = express.Router()
 
   router.post('/api/register',(req,res) => validateRegister(req,res));
   router.post('/api/login',(req,res) => loginValidation(req,res));
+  router.post(`/api/forgot-password`,(req,res) => forgotPassword(req,res));
+  router.get(`/api/reset-password/:id/:token`,(req,res) => resetPassword(req,res));
 
-
-  // router.get('/api/login',(req,res) => {
-  //   res.send("hellelouuuya")
-  // });
 
 
 module.exports = router;

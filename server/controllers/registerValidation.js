@@ -5,7 +5,7 @@ const {generateToken} = require('../token-config');
 
 
 const regiterValidate = Joi.object({
-   name : Joi.string().min(6).required(),     
+   name : Joi.string().min(4).required(),     
    email : Joi.string().min(6).required().email(),     
    password : Joi.string().min(6).required()   
 })
@@ -13,7 +13,7 @@ const regiterValidate = Joi.object({
  async function validateRegister(req,res){
     const {name,email,password} = req.body ;
     try {
-        // name , email and password sohld be validated
+        // name , email and password should be validated
         const { error ,details } = await regiterValidate.validateAsync(req.body)
          if (error) {
           if (details.length > 0) {
@@ -35,7 +35,8 @@ const regiterValidate = Joi.object({
                     token: generateToken(user.email)
                 })
     } catch (error) {
-        return res.status(402).json({error:error.message})
+        // return res.status(402).json({error:error.message})
+        return res.status(402).json({error:"Email belongs to an existing user"})
     }
 }
 

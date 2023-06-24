@@ -6,35 +6,44 @@ import AuthContext from '../context/AuthProvider';
 import axios from "../api/axios";
 import { useCookies } from 'react-cookie';
 import { Link, useNavigate } from 'react-router-dom';
-const login_url = process.env.REACT_APP_HOST_NAME+'api/login';
 
 
-function Login() {
+const login_url = process.env.REACT_APP_HOST_NAME+'api/reset-password';
+
+
+function ResetPassword() {
+    const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [errorMessage ,setErrorMessage] = useState("");
+    const [successMessage ,setSuccessMessage] = useState("");
     const navigate = useNavigate()
     const [_, setCookie] = useCookies(["access_token"])
     
     const { state, dispatch } = useContext(AuthContext);
 
-    async function loginUser(event) {
+    async function resetPassword(event) {
            event.preventDefault();
+           setErrorMessage("");
+           setSuccessMessage("");
                 axios.post(login_url,
                             {
                             email: email,
-                            password: password,
                             },
                             {
                             headers:{"Content-Type":'application/json'},
                             })
                     .then((response) => {
                         console.log(response.data);
-                        const user ={name:response.data.name,email:response.data.email,token:response.data.token}
-                        dispatch({type:'LOGIN',payload:{isAuthorized:true,user:user}});
-                        setCookie("access_token",response.data.token);
-                        window.localStorage.setItem("userEmail",response.data.email);
-                        navigate("/about")
+                        // const user ={name:response.data.name,email:response.data.email,token:response.data.token}
+                        // dispatch({type:'LOGIN',payload:{isAuthorized:true,user:user}});
+                        // setCookie("access_token",response.data.token);
+                        // window.localStorage.setItem("userEmail",response.data.email);
+                        // navigate("/about")
+                        setSuccessMessage(response.data.message)
+                        setName("")
+                        setEmail("")
+                        setPassword("")
                     })
                     .catch((error) => {
                         console.error(error.response.data.error);
@@ -52,42 +61,40 @@ function Login() {
                 <img src={logo} alt="LOGO" />
             </div> 
 
-            <form onSubmit={loginUser} className="form-control">
+            <form onSubmit={resetPassword} className="form-control-register">
 
                 {
-                    errorMessage &&  <div className="notifications-container">
-                                <div className="error-alert">
+                    successMessage &&  <div className="notifications-container">
+                                <div className="success-message">
                                     <div className="flex">
                                         <div className="error-prompt-container">
-                                            <p className="error-prompt-heading">{errorMessage} </p>          
+                                            <p className="success-prompt-heading">{successMessage} </p>          
                                         </div>
                                     </div>
                                 </div>
                     </div> 
                 }
+                {
+                    errorMessage &&  <div className="notifications-container">
+                                            <div className="error-alert">
+                                                <div className="flex">
+                                                    <div className="error-prompt-container">
+                                                        <p className="error-prompt-heading">{errorMessage} </p>          
+                                                    </div>
+                                                </div>
+                                            </div>
+                                      </div> 
+                }
                
                 
+  
                 <div className='control-div'>
                     <input 
                         required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         type="text" 
-                        name='username'/>
-                    <label htmlFor='username'>
-                        <span style={{ transitionDelay: '350ms' }}>E</span>
-                        <span style={{ transitionDelay: '300ms' }}>m</span>
-                        <span style={{ transitionDelay: '250ms' }}>a</span>
-                        <span style={{ transitionDelay: '200ms' }}>i</span>
-                        <span style={{ transitionDelay: '150ms' }}>l</span>
-                    </label>
-                </div>
-                <div className='control-div'>
-                <input required 
-                       type="password"
-                       value={password}
-                       onChange={(e) => setPassword(e.target.value)}
-                       name='password'/>
+                        name='password'/>
                     <label htmlFor='password'>
                         <span style={{ transitionDelay: '350ms' }}>P</span>
                         <span style={{ transitionDelay: '300ms' }}>a</span>
@@ -99,12 +106,13 @@ function Login() {
                         <span style={{ transitionDelay: '0ms' }}>d</span>
                     </label>
                 </div>
+               
               
-                <button type='submit'>submit</button>
+                <button type='submit'>Send Email</button>
 
                 <div className="password-policy">
-                    <Link to='/register' className="policy-link" >register</Link>
-                    <Link to='/forget-password' className="policy-link" >Forgot password ? </Link>
+                    <Link  ></Link>
+                    <Link to='/login' className="policy-link-register" >login</Link>
                 </div>
             </form>
             
@@ -113,4 +121,4 @@ function Login() {
   )
 }
 
-export default Login
+export default ResetPassword
