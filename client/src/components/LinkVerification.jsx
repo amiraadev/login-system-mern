@@ -6,54 +6,47 @@ import AuthContext from '../context/AuthProvider';
 import axios from "../api/axios";
 import { useCookies } from 'react-cookie';
 import { Link, useNavigate } from 'react-router-dom';
-const login_url = process.env.REACT_APP_HOST_NAME+'api/forgot-password';
 
+function LinkVerification() {
 
-function ForgotPassword() {
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [link, setLink] = useState("")
     const [errorMessage ,setErrorMessage] = useState("");
     const [successMessage ,setSuccessMessage] = useState("");
     const navigate = useNavigate()
-    const [_, setCookie] = useCookies(["access_token"])
-    
     const { state, dispatch } = useContext(AuthContext);
-
-    async function registerUser(event) {
-           event.preventDefault();
-           setErrorMessage("");
-           setSuccessMessage("");
-                axios.post(login_url,
-                            {
-                            email: email,
-                            },
-                            {
-                            headers:{"Content-Type":'application/json'},
-                            })
-                    .then((response) => {
-                        console.log(response.data);
+    
 
 
-                        // const user ={name:response.data.name,email:response.data.email,token:response.data.token}
-                        // dispatch({type:'LOGIN',payload:{isAuthorized:true,user:user}});
-                        // setCookie("access_token",response.data.token);
-                        // window.localStorage.setItem("userEmail",response.data.email);
-                        // navigate("/about")
-                        setSuccessMessage(response.data.message)
-                        setName("")
-                        setEmail("")
-                        setPassword("")
-                        navigate("/link-verification")
-                    })
-                    .catch((error) => {
-                        console.error(error.response.data.error);
+    async function VerifyLink(event) {
+        event.preventDefault();
+        setErrorMessage("");
+        setSuccessMessage("");
 
-                        setErrorMessage(error.response.data.error)
-                    })
-           
-    }
+             axios.get(link)
+                 .then((response) => {
+                     console.log(response.data);
 
+
+
+                     // const user ={name:response.data.name,email:response.data.email,token:response.data.token}
+                     // dispatch({type:'LOGIN',payload:{isAuthorized:true,user:user}});
+                     // setCookie("access_token",response.data.token);
+                     // window.localStorage.setItem("userEmail",response.data.email);
+                     // navigate("/about")
+                     setSuccessMessage(response.data.message)
+                     dispatch({type:'LOGIN',payload:{isAuthorized:true,user:{email:response.data.email}}});
+
+                     navigate('/reset-password')
+                    //  setCode("")
+             
+                 })
+                 .catch((error) => {
+                     console.error(error.response.data.error);
+
+                     setErrorMessage(error.response.data.error)
+                 })
+        
+ }
 
   return (
     <div className='rectangle'>
@@ -62,7 +55,7 @@ function ForgotPassword() {
                 <img src={logo} alt="LOGO" />
             </div> 
 
-            <form onSubmit={registerUser} className="form-control-register">
+            <form onSubmit={VerifyLink} className="form-control-register">
 
                 {
                     successMessage &&  <div className="notifications-container">
@@ -92,21 +85,20 @@ function ForgotPassword() {
                 <div className='control-div'>
                     <input 
                         required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={link}
+                        onChange={(e) => setLink(e.target.value)}
                         type="text" 
-                        name='email'/>
-                    <label htmlFor='email'>
-                        <span style={{ transitionDelay: '350ms' }}>E</span>
-                        <span style={{ transitionDelay: '300ms' }}>m</span>
-                        <span style={{ transitionDelay: '250ms' }}>a</span>
-                        <span style={{ transitionDelay: '200ms' }}>i</span>
-                        <span style={{ transitionDelay: '150ms' }}>l</span>
+                        name='link'/>
+                    <label htmlFor='password'>
+                        <span style={{ transitionDelay: '350ms' }}>L</span>
+                        <span style={{ transitionDelay: '300ms' }}>I</span>
+                        <span style={{ transitionDelay: '250ms' }}>N</span>
+                        <span style={{ transitionDelay: '200ms' }}>K</span>
                     </label>
                 </div>
-               
+                
               
-                <button type='submit'>Send Email</button>
+                <button type='submit'>VERIFY</button>
 
                 <div className="password-policy">
                     <Link  ></Link>
@@ -119,4 +111,4 @@ function ForgotPassword() {
   )
 }
 
-export default ForgotPassword
+export default LinkVerification

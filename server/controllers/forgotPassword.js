@@ -29,7 +29,7 @@ async function forgotPassword (req,res) {
         }
 
         const token = generateToken(user.email);
-        const link = `http://localhost:${process.env.PORT}/reset-password/${user.id}/${token}`;
+        const link = `http://localhost:${process.env.PORT}/api/verify-link/${user.id}/${token}`;
         console.log(link);
         return res.status(200).json({
                     message:"A link was send to your address mail to reset your password",                  

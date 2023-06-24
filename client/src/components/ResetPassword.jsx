@@ -5,52 +5,68 @@ import logo from '../assets/images/logo-2-amira.png';
 import AuthContext from '../context/AuthProvider';
 import axios from "../api/axios";
 import { useCookies } from 'react-cookie';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate,useParams } from 'react-router-dom';
+
+
 
 
 const login_url = process.env.REACT_APP_HOST_NAME+'api/reset-password';
 
 
 function ResetPassword() {
+
+    const param = useParams()
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [newPassword, setNewPassword] = useState("")
+    const [passwordConfirm, setPasswordConfirm] = useState("")
     const [errorMessage ,setErrorMessage] = useState("");
     const [successMessage ,setSuccessMessage] = useState("");
     const navigate = useNavigate()
     const [_, setCookie] = useCookies(["access_token"])
     
     const { state, dispatch } = useContext(AuthContext);
-
+    
     async function resetPassword(event) {
            event.preventDefault();
-           setErrorMessage("");
-           setSuccessMessage("");
-                axios.post(login_url,
-                            {
-                            email: email,
-                            },
-                            {
-                            headers:{"Content-Type":'application/json'},
-                            })
-                    .then((response) => {
-                        console.log(response.data);
-                        // const user ={name:response.data.name,email:response.data.email,token:response.data.token}
-                        // dispatch({type:'LOGIN',payload:{isAuthorized:true,user:user}});
-                        // setCookie("access_token",response.data.token);
-                        // window.localStorage.setItem("userEmail",response.data.email);
-                        // navigate("/about")
-                        setSuccessMessage(response.data.message)
-                        setName("")
-                        setEmail("")
-                        setPassword("")
-                    })
-                    .catch((error) => {
-                        console.error(error.response.data.error);
 
-                        setErrorMessage(error.response.data.error)
-                    })
-           
+           if(newPassword == passwordConfirm) {
+            setErrorMessage("");
+            setSuccessMessage("");
+                 axios.put(login_url,
+                             {
+                             email: state.user.email,
+                             newPassword:newPassword
+                             },
+                             {
+                             headers:{"Content-Type":'application/json'},
+                             })
+                     .then((response) => {
+                         console.log(response.data);
+ 
+ 
+ 
+                         // const user ={name:response.data.name,email:response.data.email,token:response.data.token}
+                         // dispatch({type:'LOGIN',payload:{isAuthorized:true,user:user}});
+                         // setCookie("access_token",response.data.token);
+                         // window.localStorage.setItem("userEmail",response.data.email);
+                         // navigate("/about")
+                         setSuccessMessage(response.data.message)
+                         setName("")
+                         setEmail("")
+                         setNewPassword("")
+                     })
+                     .catch((error) => {
+                         console.error(error.response.data.error);
+ 
+                         setErrorMessage(error.response.data.error)
+                     })
+   
+           }
+           else {
+            setErrorMessage("passwords do not match ")
+           }
+                   
     }
 
 
@@ -88,13 +104,12 @@ function ResetPassword() {
                
                 
   
-                <div className='control-div'>
-                    <input 
-                        required
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        type="text" 
-                        name='password'/>
+               <div className='control-div'>
+                <input required 
+                       type="password"
+                       value={newPassword}
+                       onChange={(e) => setNewPassword(e.target.value)}
+                       name='password'/>
                     <label htmlFor='password'>
                         <span style={{ transitionDelay: '350ms' }}>P</span>
                         <span style={{ transitionDelay: '300ms' }}>a</span>
@@ -106,13 +121,30 @@ function ResetPassword() {
                         <span style={{ transitionDelay: '0ms' }}>d</span>
                     </label>
                 </div>
-               
+                <div className='control-div'>
+                <input required 
+                       type="password"
+                       value={passwordConfirm}
+                       onChange={(e) => setPasswordConfirm(e.target.value)}
+                       name='confirmPassword'/>
+                    <label htmlFor='confirmPassword'>
+                        <span style={{ transitionDelay: '350ms' }}>C</span>
+                        <span style={{ transitionDelay: '300ms' }}>o</span>
+                        <span style={{ transitionDelay: '250ms' }}>n</span>
+                        <span style={{ transitionDelay: '200ms' }}>f</span>
+                        <span style={{ transitionDelay: '150ms' }}>i</span>
+                        <span style={{ transitionDelay: '100ms' }}>r</span>
+                        <span style={{ transitionDelay: '50ms' }}>m</span>
+                    </label>
+                </div>
               
-                <button type='submit'>Send Email</button>
+                
+              
+                <button type='submit'>Update Password</button>
 
                 <div className="password-policy">
-                    <Link  ></Link>
-                    <Link to='/login' className="policy-link-register" >login</Link>
+                    {/* <Link  ></Link>
+                    <Link to='/login' className="policy-link-register" >login</Link> */}
                 </div>
             </form>
             
