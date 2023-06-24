@@ -10,13 +10,13 @@ const { getUserByMail } = require('../usefullMethods');
 
 
 const resetPasswordValidate = Joi.object({    
-   password : Joi.string().min(6).required() ,  
+  newPassword : Joi.string().min(6).required() ,  
    email : Joi.string().min(6).required()   
 })
 
 
  async function resetPassword(req,res){
-  const {email,newpassword} = req.body;
+  const {email,newPassword} = req.body;
 
 
   try {
@@ -30,17 +30,23 @@ const resetPasswordValidate = Joi.object({
    }
 
 
-    const user = await User.findOne({ email: email });
+    const user = await userModel.findOne({ email: email });
     const  salt = await bcrypt.genSalt(5);
-    const  hashedPassword = await bcrypt.hash(req.body.password,salt);
+    const  hashedPassword = await bcrypt.hash(newPassword,salt);
     if(user) {
       user.password = hashedPassword;
       user.save();
-      res.status(200).json({message:"new password was saved "})   
+      return res.status(200).json({
+        message : "Password updated",
+        _id: user.id,
+        name: user.name,
+        email: user.email,
+        token: generateToken(user.email)
+    })
     }
     
   } catch (error) {
-    return res.status(408).json({error:error})
+    return res.status(408).json({error:error.message})
   }
   
 }

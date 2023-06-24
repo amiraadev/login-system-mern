@@ -23,9 +23,8 @@ const router = express.Router()
   router.post('/api/register',(req,res) => validateRegister(req,res));
   router.post('/api/login',(req,res) => loginValidation(req,res));
   router.post(`/api/forgot-password`,(req,res) => forgotPassword(req,res));
-  router.get(`/api/reset-password/:id/:token`,(req,res) => resetPassword(req,res));
   router.get(`/api/verify-link/:id/:token`,(req,res) => verifLink(req,res));
-  // router.get(`/api/reset-password`,(req,res) => resetPassword(req,res));
+  router.put(`/api/reset-password`,(req,res) => resetPassword(req,res));
 
   
 
