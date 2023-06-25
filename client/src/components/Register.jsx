@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import {  useState } from 'react';
 import '../App.css';
 import logo from '../assets/images/logo-2-amira.png';
@@ -20,36 +20,65 @@ function Register() {
     
     const { state, dispatch } = useContext(AuthContext);
 
+    
+
+        // useEffect(() => {
+        //     const timeout = setTimeout(() => {
+        //     notificationsContainer.style.display = 'none';
+        //     }, 5000);
+
+        //     return () => {
+        //     clearTimeout(timeout);
+        //     };
+        // }, [successMessage, errorMessage]);
+
+
+
     async function registerUser(event) {
            event.preventDefault();
-           setErrorMessage("");
-           setSuccessMessage("");
-                axios.post(login_url,
-                            {
-                            name:name,
-                            email: email,
-                            password: password,
-                            },
-                            {
-                            headers:{"Content-Type":'application/json'},
-                            })
-                    .then((response) => {
-                        console.log(response.data);
-                        // const user ={name:response.data.name,email:response.data.email,token:response.data.token}
-                        // dispatch({type:'LOGIN',payload:{isAuthorized:true,user:user}});
-                        // setCookie("access_token",response.data.token);
-                        // window.localStorage.setItem("userEmail",response.data.email);
-                        // navigate("/about")
-                        setSuccessMessage(response.data.message)
-                        setName("")
-                        setEmail("")
-                        setPassword("")
-                    })
-                    .catch((error) => {
-                        console.error(error.response.data.error);
 
-                        setErrorMessage(error.response.data.error)
-                    })
+        //    setErrorMessage("");
+        //    setSuccessMessage("");
+        //         axios.post(login_url,
+        //                     {
+        //                     name:name,
+        //                     email: email,
+        //                     password: password,
+        //                     },
+        //                     {
+        //                     headers:{"Content-Type":'application/json'},
+        //                     })
+        //             .then((response) => {
+        //                 console.log(response.data);
+        //                 // const user ={name:response.data.name,email:response.data.email,token:response.data.token}
+        //                 // dispatch({type:'LOGIN',payload:{isAuthorized:true,user:user}});
+        //                 // setCookie("access_token",response.data.token);
+        //                 // window.localStorage.setItem("userEmail",response.data.email);
+        //                 // navigate("/about")
+        //                 setSuccessMessage(response.data.message)
+        //                 setName("")
+        //                 setEmail("")
+        //                 setPassword("")
+        //             })
+        //             .catch((error) => {
+        //                 console.error(error.response.data.error);
+
+        //                 setErrorMessage(error.response.data.error)
+        //             })
+
+        // setSuccessMessage("response.data.message")
+        // console.log(notificationsContainer);
+
+        setSuccessMessage("User successfully registered!")
+        const timeout = setTimeout(() => {
+            setSuccessMessage('');
+          }, 2000);
+      
+          return () => {
+            clearTimeout(timeout);
+          };
+
+
            
     }
 
@@ -64,7 +93,7 @@ function Register() {
             <form onSubmit={registerUser} className="form-control-register">
 
                 {
-                    successMessage &&  <div className="notifications-container">
+                    successMessage &&  <div className="notifications-container" >
                                 <div className="success-message">
                                     <div className="flex">
                                         <div className="error-prompt-container">
@@ -136,11 +165,11 @@ function Register() {
               
                 <button type='submit'>register</button>
 
+            </form>
                 <div className="password-policy">
                     <Link  ></Link>
                     <Link to='/login' className="policy-link-register" >login</Link>
                 </div>
-            </form>
             
         </div>
     </div>
