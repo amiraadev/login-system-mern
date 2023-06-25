@@ -67,6 +67,9 @@ function Register() {
                         console.error(error.response.data.error);
 
                         setErrorMessage(error.response.data.error)
+                        setName("")
+                        setEmail("")
+                        setPassword("")
                     })
 
 
