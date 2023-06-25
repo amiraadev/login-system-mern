@@ -41,9 +41,11 @@ function LinkVerification() {
              
                  })
                  .catch((error) => {
-                     console.error(error.response.data.error);
+                    //  console.error(error.response.data.error);
+                     console.error(error);
 
-                     setErrorMessage(error.response.data.error)
+                     setErrorMessage("The link was not verified ! ");
+                     setLink('');
                  })
         
  }
@@ -81,7 +83,10 @@ function LinkVerification() {
                 }
                
                 
-  
+               <div className="notifications-container">
+                            <p className='instruction-heading'>A link was sent to your email,copy it and paste it here</p>
+               </div>
+
                 <div className='control-div'>
                     <input 
                         required

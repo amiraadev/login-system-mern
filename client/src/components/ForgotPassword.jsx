@@ -50,6 +50,14 @@ function ForgotPassword() {
                         console.error(error.response.data.error);
 
                         setErrorMessage(error.response.data.error)
+                        setEmail("")
+                        const timeout = setTimeout(() => {
+                            setErrorMessage('');
+                          }, 1500);
+                      
+                          return () => {
+                            clearTimeout(timeout);
+                          };
                     })
            
     }
@@ -61,7 +69,8 @@ function ForgotPassword() {
             <div className="logo">
                 <img src={logo} alt="LOGO" />
             </div> 
-
+           
+                
             <form onSubmit={registerUser} className="form-control-register">
 
                 {
@@ -89,6 +98,10 @@ function ForgotPassword() {
                
                 
   
+               <div className="notifications-container">
+                            <p className='instruction-heading'>write your email account here</p>
+               </div>
+
                 <div className='control-div'>
                     <input 
                         required

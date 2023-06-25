@@ -37,46 +37,40 @@ function Register() {
     async function registerUser(event) {
            event.preventDefault();
 
-        //    setErrorMessage("");
-        //    setSuccessMessage("");
-        //         axios.post(login_url,
-        //                     {
-        //                     name:name,
-        //                     email: email,
-        //                     password: password,
-        //                     },
-        //                     {
-        //                     headers:{"Content-Type":'application/json'},
-        //                     })
-        //             .then((response) => {
-        //                 console.log(response.data);
-        //                 // const user ={name:response.data.name,email:response.data.email,token:response.data.token}
-        //                 // dispatch({type:'LOGIN',payload:{isAuthorized:true,user:user}});
-        //                 // setCookie("access_token",response.data.token);
-        //                 // window.localStorage.setItem("userEmail",response.data.email);
-        //                 // navigate("/about")
-        //                 setSuccessMessage(response.data.message)
-        //                 setName("")
-        //                 setEmail("")
-        //                 setPassword("")
-        //             })
-        //             .catch((error) => {
-        //                 console.error(error.response.data.error);
+           setErrorMessage("");
+           setSuccessMessage("");
+                axios.post(login_url,
+                            {
+                            name:name,
+                            email: email,
+                            password: password,
+                            },
+                            {
+                            headers:{"Content-Type":'application/json'},
+                            })
+                    .then((response) => {
+                        console.log(response.data);
+                        setSuccessMessage(response.data.message)
+                        setName("")
+                        setEmail("")
+                        setPassword("")
+                        const timeout = setTimeout(() => {
+                            setSuccessMessage('');
+                            navigate('/login')
+                          }, 1500);
+                      
+                          return () => {
+                            clearTimeout(timeout);
+                          };
+                    })
+                    .catch((error) => {
+                        console.error(error.response.data.error);
 
-        //                 setErrorMessage(error.response.data.error)
-        //             })
+                        setErrorMessage(error.response.data.error)
+                    })
 
-        // setSuccessMessage("response.data.message")
-        // console.log(notificationsContainer);
 
-        setSuccessMessage("User successfully registered!")
-        const timeout = setTimeout(() => {
-            setSuccessMessage('');
-          }, 2000);
       
-          return () => {
-            clearTimeout(timeout);
-          };
 
 
            

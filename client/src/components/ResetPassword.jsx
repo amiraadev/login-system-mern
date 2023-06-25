@@ -52,9 +52,16 @@ function ResetPassword() {
                          // window.localStorage.setItem("userEmail",response.data.email);
                          // navigate("/about")
                          setSuccessMessage(response.data.message)
-                         setName("")
-                         setEmail("")
                          setNewPassword("")
+                         setPasswordConfirm("")
+                         const timeout = setTimeout(() => {
+                            setSuccessMessage('');
+                            navigate('/login')
+                          }, 1500);
+                      
+                          return () => {
+                            clearTimeout(timeout);
+                          };
                      })
                      .catch((error) => {
                          console.error(error.response.data.error);
@@ -103,7 +110,9 @@ function ResetPassword() {
                 }
                
                 
-  
+               <div className="notifications-container">
+                            <p className='instruction-heading'>Link verified, reset your password</p>
+               </div>
                <div className='control-div'>
                 <input required 
                        type="password"
@@ -143,8 +152,8 @@ function ResetPassword() {
                 <button type='submit'>Update Password</button>
 
                 <div className="password-policy">
-                    {/* <Link  ></Link>
-                    <Link to='/login' className="policy-link-register" >login</Link> */}
+                    <Link  ></Link>
+                    <Link to='/login' className="policy-link-register" >login</Link>
                 </div>
             </form>
             

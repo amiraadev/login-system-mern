@@ -300,6 +300,11 @@ flex-direction: column;}
   line-height: 1.25rem;
   font-weight: bold;
 }
+.instruction-heading {
+  color: #ffffff81;
+  font-size: 0.775rem;
+  line-height: 1.25rem;
+}
 .success-prompt-heading {
   color: #2d5f26;
   font-size: 0.875rem;
