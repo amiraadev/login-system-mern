@@ -34,9 +34,9 @@ const forgotPassword = async (req, res) => {
       console.log(link);
   
       const mailDetails = {
-        from: process.env.GMAIL_USER,
-        to: user.email,
-        subject: "Verification link",
+        from: "medfawziallagui@gmail.com",
+        to: "allagui_amira@yahoo.com",
+        subject: "Subject of the email",
         text: emailText(link, user.name),
       };
   
