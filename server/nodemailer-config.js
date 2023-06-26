@@ -3,12 +3,11 @@ dotenv.config();
 const nodemailer = require("nodemailer")
 
 let mailTransporter = nodemailer.createTransport({
-    service:"yahoo",
-    auth :{
-        //  user:process.env.GMAIL_USER,
-        //  pass:process.env.GMAIL_PASS       
-         user:"allagui_fawzi@outlook.fr",
-         pass:"A12648659a"       
+    host: "smtp.gmail.com",
+    port: 465,
+    auth: {
+      user: process.env.GMAIL_ACCOUNT,
+      pass: process.env.PASSWORD,
     }
 })
 
