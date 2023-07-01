@@ -6,7 +6,8 @@ const Joi = require('@hapi/joi')
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken");
 const {generateToken} = require('../token-config');
-const { sendEmail } = require('../nodemailer-config');
+// const { sendEmail } = require('../nodemailer-config');
+const { sendEmail } = require('../send-email');
 const emailText = require('../email-text');
 
 
@@ -41,6 +42,7 @@ const forgotPassword = async (req, res) => {
       };
   
       sendEmail(mailDetails);
+
       return res.status(200).json({
         message: "A link was send to your address mail to reset your password",
         _id: user.id,

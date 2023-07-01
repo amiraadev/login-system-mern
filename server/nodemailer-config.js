@@ -25,4 +25,4 @@ function sendEmail(mailDetails) {
     });
   }
 
-  module.exports = { sendEmail }
+//  module.exports = { sendEmail }
