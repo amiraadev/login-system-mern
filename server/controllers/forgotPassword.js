@@ -9,9 +9,9 @@ const {generateToken} = require('../token-config');
 // const { sendEmail } = require('../nodemailer-config');
 const { sendEmail } = require('../send-email');
 const emailText = require('../email-text');
-
-
 const Mailgen = require('mailgen');
+
+
 let mailGenerator = new Mailgen({
     theme:"default",
     product:{
@@ -19,24 +19,8 @@ let mailGenerator = new Mailgen({
         link:'https://mailgen.js/'
     }
 })
-let response = {
-    body: {
-        name:"amira",
-        intro:"Reset your password",
-        table: {
-            data:[
-                {
-                item : "Nodemailer Stack Book",
-                description : "A backend application Stack Book",
-                price : "$100",
-                }
-            ]
-        },
-        outro :"Looking forward to do more business"
-    }
-}
 
-let mail = mailGenerator.generate(response)
+
 
 
 const validateLogin = Joi.object({
@@ -62,12 +46,36 @@ const forgotPassword = async (req, res) => {
       const link = `http://localhost:${process.env.PORT}/api/verify-link/${user.id}/${token}`;
       console.log(link);
   
-      const mailDetails = {
-        from: "medfawziallagui@gmail.com",
-        to: "allagui_amira@yahoo.com",
-        subject: "Subject of the email",
-        text: emailText(link, user.name),
-      };
+
+
+
+      let response = {
+        body: {
+            name:"Amira Code ",
+            intro:"Arequest has been received to change the password for your account",
+            table: {
+                data:[
+                    {
+                    item : "link:"+link,
+                    description : "copy the following link and paste it in the link field",
+                    // price : "$100",
+                    }
+                ]
+            },
+            outro :"thank you,"
+        }
+    }
+    
+    let mail = mailGenerator.generate(response)
+
+
+
+      // const mailDetails = {
+      //   from: "medfawziallagui@gmail.com",
+      //   to: "allagui_amira@yahoo.com",
+      //   subject: "Subject of the email",
+      //   text: emailText(link, user.name),
+      // };
   
       sendEmail(mail);
 
