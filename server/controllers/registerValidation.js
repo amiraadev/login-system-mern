@@ -10,6 +10,16 @@ const regiterValidate = Joi.object({
    password : Joi.string().min(6).required()   
 })
 
+const findWord = (sentence, word) => {
+  const stringSentence = String(sentence)
+  const index = stringSentence.indexOf(word);
+  if (index === -1) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
  async function validateRegister(req,res){
     const {name,email,password} = req.body ;
     try {
@@ -35,8 +45,13 @@ const regiterValidate = Joi.object({
                     token: generateToken(user.email)
                 })
     } catch (error) {
-        // return res.status(402).json({error:error.message})
-        return res.status(402).json({error:"Email belongs to an existing user"})
+       if(findWord(error,"duplicate "))
+         {
+          return res.status(402).json({error:"Email belongs to an existing user"})
+         }
+      else
+         return res.status(402).json({error:error.message})
+        // return res.status(402).json({error:"Email belongs to an existing user"})
     }
 }
 

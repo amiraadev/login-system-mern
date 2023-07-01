@@ -35,7 +35,7 @@ let response = {
 let mail = mailGenerator.generate(response)
 
 
-async function sendEmail(html_text) {
+async function sendEmail(userEmail,html_text) {
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -47,7 +47,8 @@ async function sendEmail(html_text) {
 
   const info = await transporter.sendMail({
     from: "medfawziallagui@gmail.com",
-    to: "allagui_amira@yahoo.com",
+    // to: "allagui_amira@yahoo.com",
+    to: userEmail,
     subject: "Subject of the email",
     html: html_text,
   });

@@ -1,17 +1,32 @@
 const dotenv = require('dotenv')
 dotenv.config();
-
 const { getUserByMail } = require("../usefullMethods");
 const Joi = require('@hapi/joi')
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken");
 const {generateToken} = require('../token-config');
-// const { sendEmail } = require('../nodemailer-config');
 const { sendEmail } = require('../send-email');
 const emailText = require('../email-text');
 const Mailgen = require('mailgen');
 
 
+// IF WE CHOOSE TO WORK WITH OTP
+
+// const crypto = require('crypto');
+// const generateOTP = () => {
+//   return crypto.randomBytes(6).toString('hex');
+// };
+
+// const OTP = () => {
+//   const otp = generateOTP();
+//   console.log(otp);
+//   return otp;
+// };
+// OTP();
+
+
+
+// MAIL GENERATOR
 let mailGenerator = new Mailgen({
     theme:"default",
     product:{
@@ -21,8 +36,7 @@ let mailGenerator = new Mailgen({
 })
 
 
-
-
+//MAIL VERIFICATION
 const validateLogin = Joi.object({
     email: Joi.string().min(6).required(),
 })
@@ -46,9 +60,6 @@ const forgotPassword = async (req, res) => {
       const link = `http://localhost:${process.env.PORT}/api/verify-link/${user.id}/${token}`;
       console.log(link);
   
-
-
-
       let response = {
         body: {
             name:"Amira Code ",
@@ -56,9 +67,9 @@ const forgotPassword = async (req, res) => {
             table: {
                 data:[
                     {
+                    item : "copy the following link and paste it in the link field",
                     item : "link:"+link,
-                    description : "copy the following link and paste it in the link field",
-                    // price : "$100",
+                    description : "",
                     }
                 ]
             },
@@ -68,16 +79,7 @@ const forgotPassword = async (req, res) => {
     
     let mail = mailGenerator.generate(response)
 
-
-
-      // const mailDetails = {
-      //   from: "medfawziallagui@gmail.com",
-      //   to: "allagui_amira@yahoo.com",
-      //   subject: "Subject of the email",
-      //   text: emailText(link, user.name),
-      // };
-  
-      sendEmail(mail);
+      sendEmail(email,mail);
 
       return res.status(200).json({
         message: "A link was send to your address mail to reset your password",
