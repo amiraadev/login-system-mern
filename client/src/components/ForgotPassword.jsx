@@ -20,7 +20,7 @@ function ForgotPassword() {
     
     const { state, dispatch } = useContext(AuthContext);
 
-    async function registerUser(event) {
+    async function getUserMail(event) {
            event.preventDefault();
            setErrorMessage("");
            setSuccessMessage("");
@@ -71,7 +71,7 @@ function ForgotPassword() {
             </div> 
            
                 
-            <form onSubmit={registerUser} className="form-control-register">
+            <form onSubmit={getUserMail} className="form-control-register">
 
                 {
                     successMessage &&  <div className="notifications-container">
@@ -122,7 +122,7 @@ function ForgotPassword() {
                 <button type='submit'>Send Email</button>
 
                 <div className="password-policy">
-                    <Link  ></Link>
+                    <Link></Link>
                     <Link to='/login' className="policy-link-register" >login</Link>
                 </div>
             </form>

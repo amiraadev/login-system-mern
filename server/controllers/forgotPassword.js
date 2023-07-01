@@ -11,6 +11,34 @@ const { sendEmail } = require('../send-email');
 const emailText = require('../email-text');
 
 
+const Mailgen = require('mailgen');
+let mailGenerator = new Mailgen({
+    theme:"default",
+    product:{
+        name:"Mailgen",
+        link:'https://mailgen.js/'
+    }
+})
+let response = {
+    body: {
+        name:"amira",
+        intro:"Reset your password",
+        table: {
+            data:[
+                {
+                item : "Nodemailer Stack Book",
+                description : "A backend application Stack Book",
+                price : "$100",
+                }
+            ]
+        },
+        outro :"Looking forward to do more business"
+    }
+}
+
+let mail = mailGenerator.generate(response)
+
+
 const validateLogin = Joi.object({
     email: Joi.string().min(6).required(),
 })
@@ -41,7 +69,7 @@ const forgotPassword = async (req, res) => {
         text: emailText(link, user.name),
       };
   
-      sendEmail(mailDetails);
+      sendEmail(mail);
 
       return res.status(200).json({
         message: "A link was send to your address mail to reset your password",
