@@ -29,7 +29,7 @@ function Login() {
                             headers:{"Content-Type":'application/json'},
                             })
                     .then((response) => {
-                        console.log(response.data);
+                        // console.log(response.data);
                         const user ={name:response.data.name,email:response.data.email,token:response.data.token}
                         dispatch({type:'LOGIN',payload:{isAuthorized:true,user:user}});
                         setCookie("access_token",response.data.token);
@@ -37,7 +37,7 @@ function Login() {
                         navigate("/about")
                     })
                     .catch((error) => {
-                        console.error(error.response.data.error);
+                        // console.error(error.response.data.error);
 
                         setErrorMessage(error.response.data.error)
                     })
