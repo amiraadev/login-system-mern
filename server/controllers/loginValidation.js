@@ -28,10 +28,6 @@ async function loginValidation (req,res) {
         if (!user) {
             return res.status(402).json({error:"there is no such user with this email address "})
         }
-        //   const token = jwt.sign({
-        //     name:user.name,
-        //     email:user.email,
-        //   },process.env.TOKEN_SECRET)
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordMatch){

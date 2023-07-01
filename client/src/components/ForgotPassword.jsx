@@ -32,14 +32,7 @@ function ForgotPassword() {
                             headers:{"Content-Type":'application/json'},
                             })
                     .then((response) => {
-                        console.log(response.data);
-
-
-                        // const user ={name:response.data.name,email:response.data.email,token:response.data.token}
-                        // dispatch({type:'LOGIN',payload:{isAuthorized:true,user:user}});
-                        // setCookie("access_token",response.data.token);
-                        // window.localStorage.setItem("userEmail",response.data.email);
-                        // navigate("/about")
+                        // console.log(response.data);
                         setSuccessMessage(response.data.message)
                         setName("")
                         setEmail("")
@@ -47,7 +40,7 @@ function ForgotPassword() {
                         navigate("/link-verification")
                     })
                     .catch((error) => {
-                        console.error(error.response.data.error);
+                        // console.error(error.response.data.error);
 
                         setErrorMessage(error.response.data.error)
                         setEmail("")

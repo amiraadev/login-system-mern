@@ -25,14 +25,6 @@ function LinkVerification() {
              axios.get(link)
                  .then((response) => {
                      console.log(response.data);
-
-
-
-                     // const user ={name:response.data.name,email:response.data.email,token:response.data.token}
-                     // dispatch({type:'LOGIN',payload:{isAuthorized:true,user:user}});
-                     // setCookie("access_token",response.data.token);
-                     // window.localStorage.setItem("userEmail",response.data.email);
-                     // navigate("/about")
                      setSuccessMessage(response.data.message)
                      dispatch({type:'LOGIN',payload:{isAuthorized:true,user:{email:response.data.email}}});
 
@@ -42,7 +34,7 @@ function LinkVerification() {
                  })
                  .catch((error) => {
                     //  console.error(error.response.data.error);
-                     console.error(error);
+                    //  console.error(error);
 
                      setErrorMessage("The link was not verified ! ");
                      setLink('');
